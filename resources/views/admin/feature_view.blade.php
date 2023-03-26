@@ -3,13 +3,13 @@
 @section('heading', 'View Features')
 
 @section('right_top_button')
-<a href="{{route('admin_slide_add')}}" class="btn btn-primary">Add Feature</a>
+<a href="{{route('admin_feature_add')}}" class="btn btn-primary">Add Feature</a>
 @endsection
 @section('main_content')
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Slide-View</h1>
+                <h1 class="mt-4">Feature-View</h1>
                 @yield('right_top_button')
                 <div class="card mb-4">
                     <div class="card-header">
@@ -38,11 +38,14 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>
-                                            <i class="{{$row->}}"></i>
+                                            <i class="{{$row->icon}}"></i>
+                                        </td>
+                                        <td>
+                                            {{$row->heading}}
                                         </td>
                                         <td class="pt_10 pb_10">
-                                            <a class="btn btn-primary" href="{{route('admin_slide_edit',$slide->id)}}">Edit</a>
-                                            <a href="{{route('admin_slide_delete',$slide->id)}}" class="btn btn-danger"
+                                            <a class="btn btn-primary" href="{{route('admin_feature_edit',$row->id)}}">Edit</a>
+                                            <a href="{{route('admin_feature_delete',$row->id)}}" class="btn btn-danger"
                                                 onclick="return confirm('Are you sure?')">Delete</a>
                                         </td>
                                     </tr>
