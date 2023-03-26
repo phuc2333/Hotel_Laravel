@@ -1,0 +1,44 @@
+1 - ghep giao dien admin dashboard-login -forgotpassword
+
+2 - tao migration table admin
+
+--------------
++++++Các tính năng của bảng quản trị:
+
+Quản trị viên có thể tạo, chỉnh sửa và xóa Khách hàng.
+
+Quản trị viên có thể thay đổi logo
+
+Quản trị viên có thể thay đổi favicon
+
+Quản trị viên có thể thay đổi thông tin thanh trên cùng.
+
+Admin có thể kiểm soát thông tin trang chủ.
+
+Quản trị viên có thể tạo, chỉnh sửa và xóa phòng khách sạn.
+
+Quản trị viên có thể tạo, chỉnh sửa và xóa Câu hỏi thường gặp.
+
+Quản trị viên có thể tạo, chỉnh sửa và xóa ảnh cho thư viện ảnh.
+
+Quản trị viên có thể tạo, chỉnh sửa và xóa ảnh cho thư viện video.
+
+Quản trị viên có thể tạo, chỉnh sửa và xóa các mục xã hội.
+
+Quản trị viên có thể gửi email cho người đăng ký.
+
+Quản trị viên có thể thay đổi ảnh, thông tin và mật khẩu của chính mình.
+
++++Tính năng khách hàng
+
+1. Khách hàng có thể thay đổi ảnh, thông tin và mật khẩu của chính mình.
+
+2. Khách hàng có thể đặt phòng khách sạn.
+
+3. Khách hàng có thể thanh toán bằng PayPal và Stripe.
+
+4. Khách hàng có thể đăng ký trên trang web này miễn phí.
+
+5. Khách hàng có thể xem đơn đặt hàng.
+
+6. Khách hàng có thể in hóa đơn.
