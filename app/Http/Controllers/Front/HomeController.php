@@ -7,7 +7,7 @@ use App\Models\Feature;
 use Illuminate\Http\Request;
 use App\Models\Slide;
 use App\Models\Testimonial;
-
+use App\Models\Post;
 class HomeController extends Controller
 {
     public function index()
@@ -15,7 +15,7 @@ class HomeController extends Controller
        $slide_all = Slide::get();
        $feature_all = Feature::get();
        $testimonial_all = Testimonial::get();
-
-        return view('front.home',compact('slide_all','feature_all','testimonial_all'));
+        $blog_all = Post::limit(5)->get();
+        return view('front.home',compact('slide_all','feature_all','testimonial_all','blog_all'));
     }
 }

@@ -72,7 +72,7 @@
                     <p>{{$item->text}}</p>
                     <a href="{{$item->button_url}}" class="btn btn-primary">{{$item->button_text}}</a>
                 </div>
-                <img class="d-block w-100" src="dist-front/img/hero/hero-1.jpg" alt="First slide">
+                <img class="d-block w-100" src="upload/{{$item->photo}}" alt="First slide">
 
             </div>
          @endforeach
@@ -351,6 +351,7 @@
     <!-- Blog Section Begin -->
     <section class="blog-section spad">
         <div class="container">
+           
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
@@ -359,52 +360,34 @@
                     </div>
                 </div>
             </div>
+           
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="blog-item set-bg" data-setbg="img/blog/blog-1.jpg">
-                        <div class="bi-text">
-                            <span class="b-tag">Travel Trip</span>
-                            <h4><a href="#">Tremblant In Canada</a></h4>
-                            <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="blog-item set-bg" data-setbg="img/blog/blog-2.jpg">
-                        <div class="bi-text">
-                            <span class="b-tag">Camping</span>
-                            <h4><a href="#">Choosing A Static Caravan</a></h4>
-                            <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="blog-item set-bg" data-setbg="img/blog/blog-3.jpg">
-                        <div class="bi-text">
-                            <span class="b-tag">Event</span>
-                            <h4><a href="#">Copper Canyon</a></h4>
-                            <div class="b-time"><i class="icon_clock_alt"></i> 21th April, 2019</div>
-                        </div>
-                    </div>
-                </div>
+                @foreach($blog_all as $row)
+                
+                @if($loop->iteration === 4)
                 <div class="col-lg-8">
-                    <div class="blog-item small-size set-bg" data-setbg="img/blog/blog-wide.jpg">
+                    <div class="blog-item set-bg" data-setbg="{{asset('uploads/'.$row->photo)}}">
                         <div class="bi-text">
-                            <span class="b-tag">Event</span>
-                            <h4><a href="#">Trip To Iqaluit In Nunavut A Canadian Arctic City</a></h4>
-                            <div class="b-time"><i class="icon_clock_alt"></i> 08th April, 2019</div>
+                            <span class="b-tag">{{$row->heading}}</span>
+                            <h4><a href="{{route('blog',$row->id)}}">{{$row->short_content}}</a></h4>
+                            <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
                         </div>
                     </div>
                 </div>
+                    
+                @else
                 <div class="col-lg-4">
-                    <div class="blog-item small-size set-bg" data-setbg="img/blog/blog-10.jpg">
+                    <div class="blog-item set-bg" data-setbg="{{asset('uploads/'.$row->photo)}}">
                         <div class="bi-text">
-                            <span class="b-tag">Travel</span>
-                            <h4><a href="#">Traveling To Barcelona</a></h4>
-                            <div class="b-time"><i class="icon_clock_alt"></i> 12th April, 2019</div>
+                            <span class="b-tag">{{$row->heading}}</span>
+                            <h4><a href="{{route('blog',$row->id)}}">{{$row->short_content}}</a></h4>
+                            <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
                         </div>
                     </div>
                 </div>
+                @endif
+                @endforeach
+             
             </div>
         </div>
     </section>

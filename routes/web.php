@@ -3,10 +3,12 @@
 use App\Http\Controllers\Admin\AdminFeatureController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminSlideController;
 use App\Http\Controllers\Admin\AdminTestimonialController;
 use App\Http\Controllers\Front\AboutController;
+use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,11 +57,22 @@ Route::prefix('admin')->group(function () {
     Route::get('/testimonial/edit/{id}', [AdminTestimonialController::class, 'edit'])->name('admin_testimonial_edit')->middleware('admin:admin');
     Route::get('/testimonial/delete/{id}', [AdminTestimonialController::class, 'delete'])->name('admin_testimonial_delete')->middleware('admin:admin');
     Route::post('/testimonial/update/{id}', [AdminTestimonialController::class, 'update'])->name('admin_testimonial_update')->middleware('admin:admin');
+
+    Route::get('/post/view', [AdminPostController::class, 'index'])->name('admin_post_view')->middleware('admin:admin');
+    Route::get('/post/add', [AdminPostController::class, 'add'])->name('admin_post_add')->middleware('admin:admin');
+    Route::post('/post/store', [AdminPostController::class, 'store'])->name('admin_post_store')->middleware('admin:admin');
+    Route::get('/post/edit/{id}', [AdminPostController::class, 'edit'])->name('admin_post_edit')->middleware('admin:admin');
+    Route::get('/post/delete/{id}', [AdminPostController::class, 'delete'])->name('admin_post_delete')->middleware('admin:admin');
+    Route::post('/post/update/{id}', [AdminPostController::class, 'update'])->name('admin_post_update')->middleware('admin:admin');
+
+
 });
 
 // front
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/about',[AboutController::class,'index'])->name('about');
+Route::get('/blog/{id}',[BlogController::class,'single'])->name('blog');
+
 
 
 

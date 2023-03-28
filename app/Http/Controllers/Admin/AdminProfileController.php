@@ -12,6 +12,7 @@ class AdminProfileController extends Controller
     {
         return view('admin.profile');
     }
+    
     public function profile_submit(Request $request)
     {
         $admin_data = Admin::where('email',Auth::guard('admin')->user()->email)->first();
