@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminFeatureController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminSlideController;
@@ -65,6 +66,17 @@ Route::prefix('admin')->group(function () {
     Route::get('/post/delete/{id}', [AdminPostController::class, 'delete'])->name('admin_post_delete')->middleware('admin:admin');
     Route::post('/post/update/{id}', [AdminPostController::class, 'update'])->name('admin_post_update')->middleware('admin:admin');
 
+    Route::get('/page/about', [AdminPageController::class, 'about'])->name('admin_page_view')->middleware('admin:admin');
+    Route::post('/page/about/update', [AdminPageController::class, 'about_update'])->name('admin_page_update')->middleware('admin:admin');
+
+    Route::get('/page/cart', [AdminPageController::class, 'cart'])->name('admin_page_cart')->middleware('admin:admin');
+    Route::post('/page/cart/update', [AdminPageController::class, 'cart_update'])->name('admin_page_cart_update')->middleware('admin:admin');
+
+    Route::get('/page/checkout', [AdminPageController::class, 'checkout'])->name('admin_page_checkout')->middleware('admin:admin');
+    Route::post('/page/checkout/update', [AdminPageController::class, 'checkout_update'])->name('admin_page_checkout_update')->middleware('admin:admin');
+
+    Route::get('/page/payment', [AdminPageController::class, 'payment'])->name('admin_page_payment')->middleware('admin:admin');
+    Route::post('/page/payment/update', [AdminPageController::class, 'payment_update'])->name('admin_page_payment_update')->middleware('admin:admin');
 
 });
 

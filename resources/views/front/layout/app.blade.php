@@ -50,10 +50,10 @@
         </div>
         <nav class="mainmenu mobile-menu">
             <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./rooms.html">Rooms</a></li>
-                <li><a href="./about-us.html">About Us</a></li>
-                <li><a href="./pages.html">Pages</a>
+                <li class="{{ request()->is('/') ? 'active' : '' }}"><a href="./index.html">Home</a></li>
+                <li class="{{ request()->is('room') ? 'active' : '' }}"><a href="./rooms.html">Rooms</a></li>
+                <li class="{{ request()->is('about') ? 'active' : '' }}"><a href="./about-us.html">About Us</a></li>
+                <li class="{{ request()->is('page') ? 'active' : '' }}"><a href="./pages.html">Pages</a>
                     <ul class="dropdown">
                         <li><a href="./room-details.html">Room Details</a></li>
                         <li><a href="#">Deluxe Room</a></li>
@@ -93,22 +93,16 @@
                     <div class="col-lg-6">
                         <div class="tn-right">
                             <div class="top-social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-tripadvisor"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                @if($global_page_data->cart_status == 1)
+                                <a href="#">{{$global_page_data->cart_heading}}</a>
+                                @endif
+                                @if($global_page_data->checkout_status == 1)
+                                <a href="#">{{$global_page_data->checkout_heading}}</a>
+                                @endif
+                                <a href="#">Sign up</a>
+                                <a href="#">Login</a>
                             </div>
-                            <a href="#" class="bk-btn">Booking Now</a>
-                            <div class="language-option">
-                                <img src={{asset("dist-front/img/flag.jpg")}} alt="">
-                                <span>EN <i class="fa fa-angle-down"></i></span>
-                                <div class="flag-dropdown">
-                                    <ul>
-                                        <li><a href="#">Zi</a></li>
-                                        <li><a href="#">Fr</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                          
                         </div>
                     </div>
                 </div>
@@ -120,7 +114,7 @@
                     <div class="col-lg-2">
                         <div class="logo">
                             <a href="./index.html">
-                                <img src={{asset("dist-front/img/logo.png")}} alt="">
+                                <img src={{ asset('dist-front/img/logo.png') }} alt="">
                             </a>
                         </div>
                     </div>
@@ -128,19 +122,27 @@
                         <div class="nav-menu">
                             <nav class="mainmenu">
                                 <ul>
-                                    <li class="{{ request()->is('/') ? 'active' : '' }}"><a href="./index.html">Home</a></li>
+                                    <li class="{{ request()->is('/') ? 'active' : '' }}"><a
+                                            href="{{ route('home') }}">Home</a></li>
                                     <li><a href="./rooms.html">Rooms</a></li>
-                                    <li class="{{ request()->is('about') ? 'active' : '' }}"><a href="./about-us.html">About Us</a></li>
-                                    <li><a href="./pages.html">Pages</a>
+                                    @if ($global_page_data->about_status === 1)
+                                        <li class="{{ request()->is('about') ? 'active' : '' }}"><a
+                                                href="{{ route('about') }}">{{ $global_page_data->about_heading }}</a>
+                                        </li>
+                                    @endif
+
+                                    <li><a href="">Pages</a>
                                         <ul class="dropdown">
-                                            <li><a href="./room-details.html">Room Details</a></li>
-                                            <li><a href="./blog-details.html">Blog Details</a></li>
+                                            <li><a href="">Room Details</a></li>
+                                            <li><a href="">Blog Details</a></li>
                                             <li><a href="#">Family Room</a></li>
                                             <li><a href="#">Premium Room</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="./blog.html">News</a></li>
-                                    <li><a href="./contact.html">Contact</a></li>
+                                    <li class="{{ request()->is('news') ? 'active' : '' }}"><a
+                                            href="./blog.html">News</a></li>
+                                    <li class="{{ request()->is('contact') ? 'active' : '' }}"><a
+                                            href="./contact.html">Contact</a></li>
                                 </ul>
                             </nav>
                             <div class="nav-right search-switch">
