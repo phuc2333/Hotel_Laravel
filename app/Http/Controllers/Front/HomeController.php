@@ -18,4 +18,9 @@ class HomeController extends Controller
         $blog_all = Post::limit(5)->get();
         return view('front.home',compact('slide_all','feature_all','testimonial_all','blog_all'));
     }
+
+    public function login()
+    {
+        return view('front.login');
+    }
 }

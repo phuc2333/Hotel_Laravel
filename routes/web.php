@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAmenityController;
 use App\Http\Controllers\Admin\AdminFeatureController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminLoginController;
@@ -7,10 +8,12 @@ use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminSlideController;
+use App\Http\Controllers\Admin\AdminSubscriberController;
 use App\Http\Controllers\Admin\AdminTestimonialController;
 use App\Http\Controllers\Front\AboutController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\SubscribeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,12 +81,34 @@ Route::prefix('admin')->group(function () {
     Route::get('/page/payment', [AdminPageController::class, 'payment'])->name('admin_page_payment')->middleware('admin:admin');
     Route::post('/page/payment/update', [AdminPageController::class, 'payment_update'])->name('admin_page_payment_update')->middleware('admin:admin');
 
+    Route::get('/page/signin', [AdminPageController::class, 'signin'])->name('admin_page_signin')->middleware('admin:admin');
+    Route::post('/page/signin/update', [AdminPageController::class, 'signin_update'])->name('admin_page_signin_update')->middleware('admin:admin');
+
+    Route::get('/page/signup', [AdminPageController::class, 'signup'])->name('admin_page_signup')->middleware('admin:admin');
+    Route::post('/page/signup/update', [AdminPageController::class, 'signup_update'])->name('admin_page_signup_update')->middleware('admin:admin');
+
+    Route::get('/subscriber/show', [AdminSubscriberController::class, 'show'])->name('admin_subscriber_show')->middleware('admin:admin');
+    Route::get('/subscriber/send-email', [AdminSubscriberController::class, 'send_email'])->name('admin_subscriber_send_email')->middleware('admin:admin');
+    Route::post('/subscriber/send-email-submit', [AdminSubscriberController::class, 'send_email_submit'])->name('admin_subscriber_send_email_submit')->middleware('admin:admin');
+
+    Route::get('/amenity/view', [AdminAmenityController::class, 'index'])->name('admin_amenity_view')->middleware('admin:admin');
+    Route::get('/amenity/add', [AdminAmenityController::class, 'add'])->name('admin_amenity_add')->middleware('admin:admin');
+    Route::post('/amenity/store', [AdminAmenityController::class, 'store'])->name('admin_amenity_store')->middleware('admin:admin');
+    Route::get('/amenity/edit/{id}', [AdminAmenityController::class, 'edit'])->name('admin_amenity_edit')->middleware('admin:admin');
+    Route::get('/amenity/delete/{id}', [AdminAmenityController::class, 'delete'])->name('admin_amenity_delete')->middleware('admin:admin');
+    Route::post('/amenity/update/{id}', [AdminAmenityController::class, 'update'])->name('admin_amenity_update')->middleware('admin:admin');
+
 });
 
 // front
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/about',[AboutController::class,'index'])->name('about');
 Route::get('/blog/{id}',[BlogController::class,'single'])->name('blog');
+Route::post('/subscriber/send-email',[SubscribeController::class,'send_email'])->name('subscribe_send_email');
+Route::get('/subscriber/verify/{email}/{token}',[SubscribeController::class,'verify'])->name('subscribe_verify');
+
+// test cho giao dien login nguoi dung
+Route::get('/login',[HomeController::class,'login']);
 
 
 

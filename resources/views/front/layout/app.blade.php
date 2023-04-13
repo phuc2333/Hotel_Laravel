@@ -93,16 +93,20 @@
                     <div class="col-lg-6">
                         <div class="tn-right">
                             <div class="top-social">
-                                @if($global_page_data->cart_status == 1)
-                                <a href="#">{{$global_page_data->cart_heading}}</a>
+                                @if ($global_page_data->cart_status == 1)
+                                    <a href="#">{{ $global_page_data->cart_heading }}</a>
                                 @endif
-                                @if($global_page_data->checkout_status == 1)
-                                <a href="#">{{$global_page_data->checkout_heading}}</a>
+                                @if ($global_page_data->checkout_status == 1)
+                                    <a href="#">{{ $global_page_data->checkout_heading }}</a>
                                 @endif
-                                <a href="#">Sign up</a>
-                                <a href="#">Login</a>
+                                @if ($global_page_data->signup_status == 1)
+                                    <a href="#">Sign up</a>
+                                @endif
+                                @if ($global_page_data->signin_status == 1)
+                                    <a href="#">Login</a>
+                                @endif
                             </div>
-                          
+
                         </div>
                     </div>
                 </div>
@@ -194,8 +198,10 @@
                         <div class="ft-newslatter">
                             <h6>New latest</h6>
                             <p>Get the latest updates and offers.</p>
-                            <form action="#" class="fn-form">
-                                <input type="text" placeholder="Email">
+                            <form action="{{ route('subscribe_send_email') }}" class="fn-form" method="post">
+                                @csrf
+                                <input type="text" name="email" placeholder="Email">
+
                                 <button type="submit"><i class="fa fa-send"></i></button>
                             </form>
                         </div>
@@ -246,6 +252,12 @@
     <!-- Search model end -->
 
     @include('front.layout.scripts')
+
+    @if (session()->get('success'))
+        <script>
+            alert('your subscription is vertify successfully');
+        </script>
+    @endif
 </body>
 
 </html>
