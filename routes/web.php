@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminPageController;
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AdminRoomController;
 use App\Http\Controllers\Admin\AdminSlideController;
 use App\Http\Controllers\Admin\AdminSubscriberController;
 use App\Http\Controllers\Admin\AdminTestimonialController;
@@ -98,6 +99,13 @@ Route::prefix('admin')->group(function () {
     Route::get('/amenity/delete/{id}', [AdminAmenityController::class, 'delete'])->name('admin_amenity_delete')->middleware('admin:admin');
     Route::post('/amenity/update/{id}', [AdminAmenityController::class, 'update'])->name('admin_amenity_update')->middleware('admin:admin');
 
+    Route::get('/room/view', [AdminRoomController::class, 'index'])->name('admin_room_view')->middleware('admin:admin');
+    Route::get('/room/add', [AdminRoomController::class, 'add'])->name('admin_room_add')->middleware('admin:admin');
+    Route::post('/room/store', [AdminRoomController::class, 'store'])->name('admin_room_store')->middleware('admin:admin');
+    Route::get('/room/edit/{id}', [AdminRoomController::class, 'edit'])->name('admin_room_edit')->middleware('admin:admin');
+    Route::get('/room/delete/{id}', [AdminRoomController::class, 'delete'])->name('admin_room_delete')->middleware('admin:admin');
+    Route::post('/room/update/{id}', [AdminRoomController::class, 'update'])->name('admin_room_update')->middleware('admin:admin');
+   
 });
 
 // front

@@ -73,7 +73,6 @@
                     <a href="{{$item->button_url}}" class="btn btn-primary">{{$item->button_text}}</a>
                 </div>
                 <img class="d-block w-100" src="upload/{{$item->photo}}" alt="First slide">
-
             </div>
          @endforeach
         </div>
