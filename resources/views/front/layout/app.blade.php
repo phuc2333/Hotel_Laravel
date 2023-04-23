@@ -103,7 +103,7 @@
                                     <a href="#">Sign up</a>
                                 @endif
                                 @if ($global_page_data->signin_status == 1)
-                                    <a href="#">Login</a>
+                                    <a href="{{route('customer_login')}}">Login</a>
                                 @endif
                             </div>
 

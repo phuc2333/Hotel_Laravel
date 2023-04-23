@@ -48,7 +48,6 @@ class SubscribeController extends Controller
         $subscriber_data = Subscriber::where('email',$email)->where('token',$token)->first();
 
         if($subscriber_data){
-          //  dd(1);
             $subscriber_data->token = '';
             $subscriber_data->status = 1;
             $subscriber_data->update();

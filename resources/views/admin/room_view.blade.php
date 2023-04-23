@@ -46,9 +46,7 @@
                                         <td class="pt_10 pb_10">
                                             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                 Detail
-                                              </button>
-                                              <a class="btn btn-primary" href="{{route('admin_room_gallery',$row->id)}}">Photo galery</a>
-                                              <a class="btn btn-primary" href="{{route('admin_room_edit',$row->id)}}"></a>
+                                            </button>            
                                             <a class="btn btn-primary" href="{{route('admin_room_edit',$row->id)}}">Edit</a>
                                             <a href="{{route('admin_room_delete',$row->id)}}" class="btn btn-danger"
                                                 onclick="return confirm('Are you sure?')">Delete</a>

@@ -11,9 +11,13 @@ use App\Http\Controllers\Admin\AdminRoomController;
 use App\Http\Controllers\Admin\AdminSlideController;
 use App\Http\Controllers\Admin\AdminSubscriberController;
 use App\Http\Controllers\Admin\AdminTestimonialController;
+use App\Http\Controllers\Customer\CustomerAuthController;
+use App\Http\Controllers\Customer\CustomerEditProfileController;
+use App\Http\Controllers\Customer\CustomerHomeController;
 use App\Http\Controllers\Front\AboutController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\RoomController;
 use App\Http\Controllers\Front\SubscribeController;
 use Illuminate\Support\Facades\Route;
 
@@ -105,19 +109,31 @@ Route::prefix('admin')->group(function () {
     Route::get('/room/edit/{id}', [AdminRoomController::class, 'edit'])->name('admin_room_edit')->middleware('admin:admin');
     Route::get('/room/delete/{id}', [AdminRoomController::class, 'delete'])->name('admin_room_delete')->middleware('admin:admin');
     Route::post('/room/update/{id}', [AdminRoomController::class, 'update'])->name('admin_room_update')->middleware('admin:admin');
-   
 });
 
 // front
-Route::get('/',[HomeController::class,'index'])->name('home');
-Route::get('/about',[AboutController::class,'index'])->name('about');
-Route::get('/blog/{id}',[BlogController::class,'single'])->name('blog');
-Route::post('/subscriber/send-email',[SubscribeController::class,'send_email'])->name('subscribe_send_email');
-Route::get('/subscriber/verify/{email}/{token}',[SubscribeController::class,'verify'])->name('subscribe_verify');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/blog/{id}', [BlogController::class, 'single'])->name('blog');
+Route::post('/subscriber/send-email', [SubscribeController::class, 'send_email'])->name('subscribe_send_email');
+Route::get('/subscriber/verify/{email}/{token}', [SubscribeController::class, 'verify'])->name('subscribe_verify');
+Route::get('/room/{id}', [RoomController::class, 'single'])->name('room');
 
-// test cho giao dien login nguoi dung
-Route::get('/login',[HomeController::class,'login']);
+// test cho giao dien login nguoi dung login
+Route::get('/login', [CustomerAuthController::class, 'login'])->name('customer_login');
+Route::post('/login-submit', [CustomerAuthController::class, 'login_submit'])->name('customer_login_submit');
+Route::get('/logout', [CustomerAuthController::class, 'logout'])->name('customer_logout');
+Route::get('/signup', [CustomerAuthController::class, 'signup'])->name('customer_signup');
+Route::post('/signup-submit', [CustomerAuthController::class, 'signup_submit'])->name('customer_signup_submit');
+Route::get('/signup-verify/{email}/{token}', [CustomerAuthController::class, 'signup_verify'])->name('customer_signup_vertify');
 
+Route::get('/forget-password', [CustomerAuthController::class, 'forget_password'])->name('customer_forget_password');
+Route::post('/forget-password-submit', [CustomerAuthController::class, 'forget_password_submit'])->name('customer_forget_password_submit');
+Route::get('/reset-password/{token}/{email}', [CustomerAuthController::class, 'reset_password'])->name('customer_reset_password');
+Route::post('/reset-password-submit', [CustomerAuthController::class, 'reset_password_submit'])->name('customer_reset_password_submit');
 
-
-
+Route::group(['middleware' => ['customer:customer']], function () {
+    Route::get('/home', [CustomerHomeController::class, 'index'])->name('customer_home');
+    Route::get('/edit-profile', [CustomerEditProfileController::class, 'index'])->name('customer_edit_profile');
+    Route::post('/edit-profile-submit', [CustomerEditProfileController::class, 'profile_submit'])->name('customer_profile_submit');
+});

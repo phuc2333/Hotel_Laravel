@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Login - SB Admin</title>
-    @include('admin.layout.styles')
-    @include('admin.layout.scripts')
+    <title>Login - SB Customer</title>
+    @include('customer.layout.styles')
+    @include('customer.layout.scripts')
 </head>
 
 <body class="bg-primary">
@@ -24,30 +24,33 @@
                                     <h3 class="text-center font-weight-light my-4">Login</h3>
                                 </div>
                                 <div class="card-body">
-                                    @if(session()->get('success'))
-                                    <div class="text-success">{{ session()->get('success')}}</div>
+                                    @if (session()->get('success'))
+                                        <div class="text-success">{{ session()->get('success') }}</div>
                                     @endif
-                                    <form action="{{ route('admin_login_submit') }}" method="POST">
+                                    <form action="{{ route('customer_login_submit') }}" method="POST">
                                         @csrf
                                         @method('post')
                                         <div class="form-floating mb-3">
-                                            <input name="email" class="form-control @error('email') is-invalid @enderror" id="inputEmail" type="email"
-                                                placeholder="name@example.com" value="{{ old('email') }}" />
+                                            <input name="email"
+                                                class="form-control @error('email') is-invalid @enderror"
+                                                id="inputEmail" type="email" placeholder="name@example.com"
+                                                value="{{ old('email') }}" />
                                             <label for="inputEmail">Email address</label>
                                             @error('email')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
-                                            @if(session()->get('error'))
-                                            <div class="text-danger">{{ session()->get('error')}}</div>
+                                            @if (session()->get('error'))
+                                                <div class="text-danger">{{ session()->get('error') }}</div>
                                             @endif
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input name="password" class="form-control @error('password') is-invalid @enderror" id="inputPassword" type="password"
-                                                placeholder="Password" />
+                                            <input name="password"
+                                                class="form-control @error('password') is-invalid @enderror"
+                                                id="inputPassword" type="password" placeholder="Password" />
                                             <label for="inputPassword">Password</label>
                                             @error('password')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="form-check mb-3">
                                             <input class="form-check-input" id="inputRememberPassword" type="checkbox"
@@ -56,14 +59,15 @@
                                                 Password</label>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <a class="small" href="{{ route('admin_forget_password') }}">Forgot
+                                            <a class="small" href="{{ route('customer_forget_password') }}">Forgot
                                                 Password?</a>
                                             <button type="submit" class="btn btn-primary">login</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="card-footer text-center py-3">
-                                    <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
+                                    <div class="small"><a href="{{ route('customer_signup') }}">Need an account? Sign
+                                            up!</a></div>
                                 </div>
                             </div>
                         </div>
