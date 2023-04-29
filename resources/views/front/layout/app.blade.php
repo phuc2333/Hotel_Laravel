@@ -8,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sona | Template</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     @include('front.layout.styles')
 
 </head>
@@ -94,16 +94,26 @@
                         <div class="tn-right">
                             <div class="top-social">
                                 @if ($global_page_data->cart_status == 1)
-                                    <a href="#">{{ $global_page_data->cart_heading }}</a>
+                                    <a href="{{ route('view_cart') }}">{{ $global_page_data->cart_heading }}</a>
                                 @endif
                                 @if ($global_page_data->checkout_status == 1)
-                                    <a href="#">{{ $global_page_data->checkout_heading }}</a>
+                                    <a href="{{ route('checkout') }}">{{ $global_page_data->checkout_heading }}</a>
                                 @endif
+
+                                @if(!Auth::guard('customer')->check())
+
                                 @if ($global_page_data->signup_status == 1)
-                                    <a href="#">Sign up</a>
+                                    <a href="{{ route('customer_signup') }}">Sign up</a>
                                 @endif
                                 @if ($global_page_data->signin_status == 1)
-                                    <a href="{{route('customer_login')}}">Login</a>
+                                    <a href="{{ route('customer_login') }}">Login</a>
+                                @endif
+
+                                @else
+                                @if ($global_page_data->signup_status == 1)
+                                <a href="{{ route('customer_home') }}">Dashboard</a>
+                                <a href="{{ route('customer_logout') }}">LogOut</a>
+                                @endif
                                 @endif
                             </div>
 

@@ -1,16 +1,17 @@
 @extends('front.layout.app')
 
 @section('main_content')
-  <!-- Room Details Section Begin -->
+    <!-- Room Details Section Begin -->
     <section class="room-details-section spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="room-details-item">
-                        <img src="{{asset('upload/' . $single_room_data->featured_photo)}}"  alt="" style="width: 100%">
+                        <img src="{{ asset('upload/' . $single_room_data->featured_photo) }}" alt=""
+                            style="width: 100%">
                         <div class="rd-text">
                             <div class="rd-title">
-                                <h3>{{$single_room_data->name}}</h3>
+                                <h3>{{ $single_room_data->name }}</h3>
                                 <div class="rdt-right">
                                     <div class="rating">
                                         <i class="icon_star"></i>
@@ -22,12 +23,12 @@
                                     <a href="#">Booking Now</a>
                                 </div>
                             </div>
-                            <h2>{{$single_room_data->price}}$<span>/Pernight</span></h2>
+                            <h2>{{ $single_room_data->price }}$<span>/Pernight</span></h2>
                             <table>
                                 <tbody>
                                     <tr>
                                         <td class="r-o">Size:</td>
-                                        <td>{{$single_room_data->size}} ft</td>
+                                        <td>{{ $single_room_data->size }} ft</td>
                                     </tr>
                                     <tr>
                                         <td class="r-o">Capacity:</td>
@@ -43,7 +44,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <p class="f-para">{{$single_room_data->description}}</p>
+                            <p class="f-para">{{ $single_room_data->description }}</p>
                             <p>The two commonly known recreational vehicle classes are the motorized and towable.
                                 Towable rvs are the travel trailers and the fifth wheel. The rv travel trailer or fifth
                                 wheel has the attraction of getting towed by a pickup or a car, thus giving the
@@ -123,28 +124,41 @@
                 <div class="col-lg-4">
                     <div class="room-booking">
                         <h3>Your Reservation</h3>
-                        <form action="#">
+                        <form action="{{ route('cart_submit') }}">
+                            @csrf
+                            <div class="select-option">
+                                <input type="hidden" name="room_id" value="{{ $single_room_data->id }}">
+                                <input type="hidden" name="room_name" value="{{ $single_room_data->name }}">
+                            </div>
                             <div class="check-date">
                                 <label for="date-in">Check In:</label>
-                                <input type="text" class="date-input" id="date-in">
-                                <i class="icon_calendar"></i>
+                                <input type="text" class="date-input" name="check_in">
+                                @error('check_in')
+                                    <div class="text-danger" style="font-size: 12px">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="check-date">
                                 <label for="date-out">Check Out:</label>
-                                <input type="text" class="date-input" id="date-out">
-                                <i class="icon_calendar"></i>
+                                <input type="text" class="date-input" name="check_out">
+                                @error('check_out')
+                                    <div class="text-danger" style="font-size: 12px">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="select-option">
-                                <label for="guest">Guests:</label>
-                                <select id="guest">
-                                    <option value="">3 Adults</option>
-                                </select>
+                                <label for="Adust">Adust:</label>
+                                <input name="adust"
+                                    style="width: 100%;
+                   height: 60%;
+                   border: 1px solid #ebebeb;"
+                                    type="number" value="" min="0" max="10">
                             </div>
                             <div class="select-option">
-                                <label for="room">Room:</label>
-                                <select id="room">
-                                    <option value="">1 Room</option>
-                                </select>
+                                <label for="children">Children:</label>
+                                <input name="children"
+                                    style="width: 100%;
+                                height: 60%;
+                                border: 1px solid #ebebeb;"
+                                    id="children" type="number" value="" min="0" max="10">
                             </div>
                             <button type="submit">Check Availability</button>
                         </form>

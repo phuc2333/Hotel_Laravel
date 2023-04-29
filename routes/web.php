@@ -16,6 +16,7 @@ use App\Http\Controllers\Customer\CustomerEditProfileController;
 use App\Http\Controllers\Customer\CustomerHomeController;
 use App\Http\Controllers\Front\AboutController;
 use App\Http\Controllers\Front\BlogController;
+use App\Http\Controllers\Front\BookingController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\RoomController;
 use App\Http\Controllers\Front\SubscribeController;
@@ -118,6 +119,9 @@ Route::get('/blog/{id}', [BlogController::class, 'single'])->name('blog');
 Route::post('/subscriber/send-email', [SubscribeController::class, 'send_email'])->name('subscribe_send_email');
 Route::get('/subscriber/verify/{email}/{token}', [SubscribeController::class, 'verify'])->name('subscribe_verify');
 Route::get('/room/{id}', [RoomController::class, 'single'])->name('room');
+Route::get('/booking/submit', [BookingController::class, 'cart_submit'])->name('cart_submit');
+Route::get('/view-cart', [BookingController::class, 'cart_view'])->name('view_cart');
+
 
 // test cho giao dien login nguoi dung login
 Route::get('/login', [CustomerAuthController::class, 'login'])->name('customer_login');
@@ -131,6 +135,9 @@ Route::get('/forget-password', [CustomerAuthController::class, 'forget_password'
 Route::post('/forget-password-submit', [CustomerAuthController::class, 'forget_password_submit'])->name('customer_forget_password_submit');
 Route::get('/reset-password/{token}/{email}', [CustomerAuthController::class, 'reset_password'])->name('customer_reset_password');
 Route::post('/reset-password-submit', [CustomerAuthController::class, 'reset_password_submit'])->name('customer_reset_password_submit');
+Route::get('/cart/delete/{id}', [BookingController::class, 'cartdelete'])->name('cart_delete');
+Route::get('/checkout', [BookingController::class, 'checkout'])->name('checkout');
+
 
 Route::group(['middleware' => ['customer:customer']], function () {
     Route::get('/home', [CustomerHomeController::class, 'index'])->name('customer_home');

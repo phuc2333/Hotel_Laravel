@@ -64,17 +64,17 @@
     {{-- test --}}
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
-            @foreach($slide_all as $item)
-            <div class="carousel-item @if($item->heading === "Sona A Luxury Hotel") active @endif ">
-                <div class="text-white position-absolute text-center" style="top: 200px;
+            @foreach ($slide_all as $item)
+                <div class="carousel-item @if ($item->heading === 'Sona A Luxury Hotel') active @endif ">
+                    <div class="text-white position-absolute text-center" style="top: 200px;
             left: 350px;">
-                    <h1>{{$item->heading}}</h1>
-                    <p>{{$item->text}}</p>
-                    <a href="{{$item->button_url}}" class="btn btn-primary">{{$item->button_text}}</a>
+                        <h1>{{ $item->heading }}</h1>
+                        <p>{{ $item->text }}</p>
+                        <a href="{{ $item->button_url }}" class="btn btn-primary">{{ $item->button_text }}</a>
+                    </div>
+                    <img class="d-block w-100" src="upload/{{ $item->photo }}" alt="First slide">
                 </div>
-                <img class="d-block w-100" src="upload/{{$item->photo}}" alt="First slide">
-            </div>
-         @endforeach
+            @endforeach
         </div>
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -86,38 +86,58 @@
         </a>
     </div>
     {{-- endTest --}}
- 
-        <div class="booking-form">
-            <h3>Booking Your Hotel</h3>
-            <form action="#" class="d-flex">
-                <div class="check-date col-3">
-                    <label for="date-in">Check In:</label>
-                    <input type="text" class="date-input" id="date-in">
-                    <i class="icon_calendar"></i>
-                </div>
-                <div class="check-date col-3">
-                    <label for="date-out">Check Out:</label>
-                    <input type="text" class="date-input" id="date-out">
-                    <i class="icon_calendar"></i>
-                </div>
-                <div class="select-option col-2">
-                    <label for="guest">Guests:</label>
-                    <select id="guest">
-                        <option value="">2 Adults</option>
-                        <option value="">3 Adults</option>
-                    </select>
-                </div>
-                <div class="select-option col-2">
+
+    <div class="booking-form">
+        <h3>Booking Your Hotel</h3>
+        <form action="{{ route('cart_submit') }}" class="d-flex">
+            @csrf
+            <div class="col-4 mr-2 h-25">
+                <div class="select-option">
                     <label for="room">Room:</label>
-                    <select id="room">
-                        <option value="">1 Room</option>
-                        <option value="">2 Room</option>
+                    <select name="room_id">
+                        @foreach ($room_All as $item)
+                            <option value="{{ $item->id }}">
+                                {{ $item->name }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
-                <button class="col-2" type="submit">Check Availability</button>
-            </form>
-        </div>
-    
+            </div>
+            <div class="check-date col-2">
+                <label for="date-in">Check In:</label>
+                <input type="text" class="date-input" name="check_in">
+                @error('check_in')
+                    <div class="text-danger" style="font-size: 12px">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="check-date col-2">
+                <label for="date-out">Check Out:</label>
+                <input type="text" class="date-input" name="check_out">
+                @error('check_out')
+                    <div class="text-danger" style="font-size: 12px">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="select-option col-1">
+                <label for="Adust">Adust:</label>
+                <input name="adust"
+                    style="width: 100%;
+                   height: 60%;
+                   border: 1px solid #ebebeb;"
+                    type="number" value="" min="0" max="10">
+            </div>
+            <div class="select-option col-1">
+                <label for="children">Children:</label>
+                <input name="children"
+                    style="width: 100%;
+                    height: 60%;
+                    border: 1px solid #ebebeb;"
+                    id="children" type="number" value="" min="0" max="10">
+            </div>
+            <button class="col-2" type="submit">Check Availability</button>
+        </form>
+    </div>
+
     <!-- About Us Section Begin -->
     <section class="aboutus-section spad">
         <div class="container">
@@ -166,15 +186,15 @@
                 </div>
             </div>
             <div class="row">
-                @foreach($feature_all as $row)
-                <div class="col-lg-4 col-sm-6">
-                    <div class="service-item">
-                        <i class="{{$row->icon}}"></i>
-                        <h4>{{$row->heading}}</h4>
-                        <p>{{$row->text}}</p>
+                @foreach ($feature_all as $row)
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="service-item">
+                            <i class="{{ $row->icon }}"></i>
+                            <h4>{{ $row->heading }}</h4>
+                            <p>{{ $row->text }}</p>
+                        </div>
                     </div>
-                </div>
-              @endforeach
+                @endforeach
             </div>
         </div>
     </section>
@@ -183,38 +203,38 @@
     <!-- Home Room Section Begin -->
     <section class="hp-room-section">
         <div class="container-fluid">
-            <div class="hp-room-items ">           
+            <div class="hp-room-items ">
                 <div class="row">
-                    @foreach($rooms as $item)
-                    <div class="col-lg-3 col-md-6">
-                        <div class="hp-room-item set-bg" data-setbg="upload/{{$item->featured_photo}}">
-                           <div class="hr-text">
-                            <h3>{{$item->name}}</h3>
-                            <h2>{{$item->price}}$<span>/Pernight</span></h2>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td class="r-o">Size:</td>
-                                        <td>{{$item->total_rooms}} ft</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Capacity:</td>
-                                        <td>Max persion 5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Bed:</td>
-                                        <td>King Beds</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Services:</td>
-                                        <td>Wifi, Television, Bathroom,...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <a href="{{route('room',$item->id)}}" class="primary-btn">More Details</a>
+                    @foreach ($rooms as $item)
+                        <div class="col-lg-3 col-md-6">
+                            <div class="hp-room-item set-bg" data-setbg="upload/{{ $item->featured_photo }}">
+                                <div class="hr-text">
+                                    <h3>{{ $item->name }}</h3>
+                                    <h2>{{ $item->price }}$<span>/Pernight</span></h2>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td class="r-o">Size:</td>
+                                                <td>{{ $item->total_rooms }} ft</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="r-o">Capacity:</td>
+                                                <td>Max persion 5</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="r-o">Bed:</td>
+                                                <td>King Beds</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="r-o">Services:</td>
+                                                <td>Wifi, Television, Bathroom,...</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <a href="{{ route('room', $item->id) }}" class="primary-btn">More Details</a>
+                                </div>
+                            </div>
                         </div>
-                        </div>
-                    </div>
                     @endforeach
                 </div>
             </div>
@@ -224,7 +244,7 @@
 
     <!-- Testimonial Section Begin -->
     <section class="testimonial-section spad">
-      
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -237,35 +257,35 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <div class="testimonial-slider owl-carousel">
-                        @foreach($testimonial_all as $row)
-                        <div class="ts-item">
-                            <p>{{$row->comment}}</p>
-                            <div class="ti-author">
-                                <div class="rating">
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star"></i>
-                                    <i class="icon_star-half_alt"></i>
+                        @foreach ($testimonial_all as $row)
+                            <div class="ts-item">
+                                <p>{{ $row->comment }}</p>
+                                <div class="ti-author">
+                                    <div class="rating">
+                                        <i class="icon_star"></i>
+                                        <i class="icon_star"></i>
+                                        <i class="icon_star"></i>
+                                        <i class="icon_star"></i>
+                                        <i class="icon_star-half_alt"></i>
+                                    </div>
+                                    <h5> - {{ $row->name }}</h5>
                                 </div>
-                                <h5> - {{$row->name}}</h5>
+                                <img src="{{ asset('upload/' . $row->photo) }}" alt="">
                             </div>
-                            <img src="{{asset('upload/'.$row->photo)}}" alt="">
-                        </div>
                         @endforeach
-                   
+
                     </div>
                 </div>
             </div>
         </div>
-      
+
     </section>
     <!-- Testimonial Section End -->
 
     <!-- Blog Section Begin -->
     <section class="blog-section spad">
         <div class="container">
-           
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
@@ -274,30 +294,30 @@
                     </div>
                 </div>
             </div>
-           
+
             <div class="row">
-                @foreach($blog_all as $row)
-                @if($loop->iteration === 4)
-                <div class="col-lg-8">
-                    <div class="blog-item set-bg" data-setbg="{{asset('uploads/'.$row->photo)}}">
-                        <div class="bi-text">
-                            <span class="b-tag">{{$row->heading}}</span>
-                            <h4><a href="{{route('blog',$row->id)}}">{{$row->short_content}}</a></h4>
-                            <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
+                @foreach ($blog_all as $row)
+                    @if ($loop->iteration === 4)
+                        <div class="col-lg-8">
+                            <div class="blog-item set-bg" data-setbg="{{ asset('uploads/' . $row->photo) }}">
+                                <div class="bi-text">
+                                    <span class="b-tag">{{ $row->heading }}</span>
+                                    <h4><a href="{{ route('blog', $row->id) }}">{{ $row->short_content }}</a></h4>
+                                    <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                @else
-                <div class="col-lg-4">
-                    <div class="blog-item set-bg" data-setbg="{{asset('uploads/'.$row->photo)}}">
-                        <div class="bi-text">
-                            <span class="b-tag">{{$row->heading}}</span>
-                            <h4><a href="{{route('blog',$row->id)}}">{{$row->short_content}}</a></h4>
-                            <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
+                    @else
+                        <div class="col-lg-4">
+                            <div class="blog-item set-bg" data-setbg="{{ asset('uploads/' . $row->photo) }}">
+                                <div class="bi-text">
+                                    <span class="b-tag">{{ $row->heading }}</span>
+                                    <h4><a href="{{ route('blog', $row->id) }}">{{ $row->short_content }}</a></h4>
+                                    <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                @endif
+                    @endif
                 @endforeach
             </div>
         </div>
