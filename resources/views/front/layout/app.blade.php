@@ -14,7 +14,8 @@
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     @include('front.layout.styles')
-
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 
 <body>
@@ -266,6 +267,11 @@
     @if (session()->get('success'))
         <script>
             alert('your subscription is vertify successfully');
+        </script>
+    @endif
+    @if (session()->get('error'))
+        <script>
+            alert('You must login');
         </script>
     @endif
 </body>

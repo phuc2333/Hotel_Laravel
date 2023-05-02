@@ -12,6 +12,7 @@ use Mail;
 class CustomerAuthController extends Controller
 {
     public function login(){
+        
         return view('customer.layout.login');
     }
     public function signup(){

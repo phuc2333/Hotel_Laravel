@@ -23,7 +23,6 @@
                 @if(session()->has('cart_room_id'))
                 <table class="cart-product">
                     <tbody>
-               
                         <tr>
                             <th class="images">
                             </th>
@@ -88,7 +87,7 @@
                       for($i = 0; $i<count($arr_cart_room_id);$i++) {
                       
                         $room_data = DB::table('rooms')->where('id',$arr_cart_room_id[$i])->first();
-                     //  dd($room_data->featured_photo);
+                   
                       @endphp
                       <tr>
                           <td class="images">

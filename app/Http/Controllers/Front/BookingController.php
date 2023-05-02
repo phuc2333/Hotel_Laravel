@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Customers;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class BookingController extends Controller
 {
     public function cart_submit(Request $request)
@@ -107,8 +109,9 @@ class BookingController extends Controller
 
     public function checkout()
     {
+    
         if(!Auth::guard('customer')->check())
-        {
+        {      
         return redirect()->back()->with('error','You must have to login in order to checkout');
         }
 
