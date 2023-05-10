@@ -137,6 +137,8 @@ Route::get('/reset-password/{token}/{email}', [CustomerAuthController::class, 'r
 Route::post('/reset-password-submit', [CustomerAuthController::class, 'reset_password_submit'])->name('customer_reset_password_submit');
 Route::get('/cart/delete/{id}', [BookingController::class, 'cartdelete'])->name('cart_delete');
 Route::get('/checkout', [BookingController::class, 'checkout'])->name('checkout');
+Route::post('/payment', [BookingController::class, 'payment'])->name('payment');
+Route::get('/payment/paypal/{price}', [BookingController::class, 'paypal'])->name('paypal');
 
 
 Route::group(['middleware' => ['customer:customer']], function () {

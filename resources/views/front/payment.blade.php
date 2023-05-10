@@ -1,30 +1,15 @@
 @extends('front.layout.app')
 
 @section('main_content')
-
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <div class="checkout-container">
     <div class="checkout-left">
-      <h2>Billing Information</h2>
-      <form action="{{route('payment')}}" method="post">
-        @csrf
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone</label>
-          <input type="tel" id="phone" name="phone" required>
-        </div>
-        <div class="form-group">
-          <label for="address">Address</label>
-          <textarea id="address" name="address" required></textarea>
-        </div>
-        <div class="form-group">
-          <button type="submit" style="width: 100%;">Continue to Payment</button>
+      <h2>Make payment</h2>
+      <form>
+
+        <div class="paypal mt20">
+         <h4>Pay with Paypal</h4>
+         <div id="paypal-button-container"></div>
         </div>
         
       </form>
@@ -131,4 +116,56 @@ $my_Room_order += $total_price;
     </div>
     @endif
   </div>
+  @php
+      $client = 'AXvgYZocdePq8LlpiXQqc15KIkxW9g7UH2yJqaLhySj5Y57Y_-E_BDntbWlm8KUdJAm_c9cwzUAv2I4R';
+      $final_price = $my_Room_order;
+  @endphp
+      <script>
+
+    // Render the PayPal button
+
+    paypal.Button.render({
+
+// Set your environment
+
+env: 'sandbox', // sandbox | production
+
+// Specify the style of the button
+
+style: {
+    label: 'checkout',
+    size:  'small',    // small | medium | large | responsive
+    shape: 'pill',     // pill | rect
+    color: 'gold'      // gold | blue | silver | black
+},
+
+// PayPal Client IDs - replace with your own
+// Create a PayPal app: https://developer.paypal.com/developer/applications/create
+
+client: {
+    sandbox:    'AXvgYZocdePq8LlpiXQqc15KIkxW9g7UH2yJqaLhySj5Y57Y_-E_BDntbWlm8KUdJAm_c9cwzUAv2I4R',
+    production: '<insert production client id>'
+},
+
+payment: function(data, actions) {
+    return actions.payment.create({
+        payment: {
+          redirect_urls:{
+              return_url: '{{ url("payment/paypal/$final_price") }}'
+            },
+            transactions: [
+                {
+                    amount: { total: {{ $final_price}}, currency: 'USD' }
+                }
+            ]
+        }
+    });
+},
+
+onAuthorize: function(data, actions) {
+    return actions.redirect();
+}
+
+}, '#paypal-button-container');
+    </script>
 @endsection

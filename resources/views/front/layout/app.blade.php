@@ -274,6 +274,11 @@
             alert('You must login');
         </script>
     @endif
+    @if (session()->get('successPayment'))
+    <script>
+        alert('Payment is successfully');
+    </script>
+@endif
 </body>
 
 </html>

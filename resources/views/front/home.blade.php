@@ -120,7 +120,7 @@
             </div>
             <div class="select-option col-1">
                 <label for="Adust">Adust:</label>
-                <input name="adust"
+                <input name="adult"
                     style="width: 100%;
                    height: 60%;
                    border: 1px solid #ebebeb;"
