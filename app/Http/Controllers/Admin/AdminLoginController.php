@@ -81,7 +81,7 @@ class AdminLoginController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ];
-
+  // dd($credential);
         if (Auth::guard('admin')->attempt($credential)) {
             return redirect()->route('admin_home');
         } else {

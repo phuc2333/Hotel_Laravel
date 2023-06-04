@@ -80,7 +80,6 @@ class AdminTestimonialController extends Controller
             $request->file('photo')->move(public_path('upload/'), $final_name);
             $obj->photo = $final_name;
         }
-        $obj->photo = $final_name;
         $obj->name = $request->name;
         $obj->designation = $request->designation;
         $obj->comment = $request->comment;

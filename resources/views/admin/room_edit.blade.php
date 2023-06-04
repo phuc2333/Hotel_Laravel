@@ -22,7 +22,7 @@
                                     @method('post')
                                     <div class="card-body text-center">
                                         <!-- Profile picture image-->
-                                        <img class="img-account-profile rounded-circle mb-2"
+                                        <img class="img-account-profile rounded-circle mb-2" 
                                             src="{{ asset('upload/' . $room_data->featured_photo) }}" alt="" width="250"
                                             height="250">
                                         <!-- Profile picture help block-->

@@ -107,7 +107,7 @@ class AdminRoomController extends Controller
             $request->validate([
                 'photo' => 'required|mimes:jpg,jped,png,gif'
             ]);
-            unlink(public_path('upload/' . $obj->photo));
+            unlink(public_path('upload/' . $obj->featured_photo));
             // Lay duoi file anh co the la jpg,png....
             $ext = $request->file('photo')->extension();
             // dat ten file: admin.jpg...
@@ -115,7 +115,7 @@ class AdminRoomController extends Controller
             // cap nhat anh vao file upload trong public/upload cua laravel
             // Moves the file to a new location
             $request->file('photo')->move(public_path('upload/'), $final_name);
-            $obj->photo = $final_name;
+            $obj->featured_photo = $final_name;
         }
         $obj->name = $request->name;
         $obj->description = $request->description;

@@ -188,9 +188,11 @@ class BookingController extends Controller
         if ($result->state == 'approved') {
             $paid_amount = $result->transactions[0]->amount->total;
             $order_no = time();
-            $statement = DB::select("SHOW TABLE STATUS LIKE 'orders'");
+             
+            // $statement = DB::select("SHOW TABLE STATUS LIKE 'orders'");
 
-            $ai_id = $statement[0]->Auto_increment;
+            // $ai_id = $statement[0]->Auto_increment;
+            //  dd($ai_id);
             $obj = new Order();
             $obj->customer_id = Auth::guard('customer')->user()->id;
             $obj->order_no = $order_no;
@@ -200,7 +202,10 @@ class BookingController extends Controller
             $obj->booking_date = date('d/m/y');
             $obj->status = 'Completed';
             $obj->save();
-
+           // lay id tu bang order de gan gia trij cho order_id o bang order_detail
+           $ai_id = DB::select("select max(id) as id from orders");
+           $order_id = $ai_id[0]->id;
+          
             $arr_cart_room_id = array();
             $i = 0;
             $cart_room_id = session()->get('cart_room_id');
@@ -246,6 +251,7 @@ class BookingController extends Controller
                 $i++;
             }
             $my_Room_order = 0;
+            
             for ($i = 0; $i < count($arr_cart_room_id); $i++) {
                 $room_data = DB::table('rooms')->where('id', $arr_cart_room_id[$i])->first();
                 $date1 = $cart_checkin_date[$i];
@@ -257,7 +263,7 @@ class BookingController extends Controller
 
                 $obj = new OrderDetail();
 
-                $obj->order_id = $ai_id;
+                $obj->order_id = $order_id;
 
                 $obj->room_id = $arr_cart_room_id[$i];
 
@@ -274,7 +280,7 @@ class BookingController extends Controller
                 $obj->subtotal = $total_price;
 
                 $obj->save();
-
+            }
                 //send email
                 $subject = 'New Order';
                 $message = 'You have an order for hotel booking.The booking information is given below:<br> <br>';
@@ -309,7 +315,6 @@ class BookingController extends Controller
                 session()->forget('phone', $request->phone);
                 session()->forget('address', $request->address);
 
-            }
             return redirect()->route('home')->with('successPayment', 'Payment is successfully');
         } else {
             return redirect()->back()->with('error', 'Payment is not successfully');

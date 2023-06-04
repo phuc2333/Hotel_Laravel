@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminAmenityController;
+use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminFeatureController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\AdminLoginController;
@@ -11,9 +12,11 @@ use App\Http\Controllers\Admin\AdminRoomController;
 use App\Http\Controllers\Admin\AdminSlideController;
 use App\Http\Controllers\Admin\AdminSubscriberController;
 use App\Http\Controllers\Admin\AdminTestimonialController;
+use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Customer\CustomerAuthController;
 use App\Http\Controllers\Customer\CustomerEditProfileController;
 use App\Http\Controllers\Customer\CustomerHomeController;
+use App\Http\Controllers\Customer\CustomerOrderController;
 use App\Http\Controllers\Front\AboutController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\BookingController;
@@ -110,6 +113,17 @@ Route::prefix('admin')->group(function () {
     Route::get('/room/edit/{id}', [AdminRoomController::class, 'edit'])->name('admin_room_edit')->middleware('admin:admin');
     Route::get('/room/delete/{id}', [AdminRoomController::class, 'delete'])->name('admin_room_delete')->middleware('admin:admin');
     Route::post('/room/update/{id}', [AdminRoomController::class, 'update'])->name('admin_room_update')->middleware('admin:admin');
+
+    Route::get('/room/order', [AdminOrderController::class, 'order'])->name('admin_order_view')->middleware('admin:admin');
+    Route::get('/customer/view', [AdminCustomerController::class, 'index'])->name('admin_customer_view')->middleware('admin:admin');
+    Route::get('/customer/change-status/{id}', [AdminCustomerController::class, 'change_status'])->name('admin_customer_change')->middleware('admin:admin');
+    Route::get('/order/invoice/{id}', [AdminOrderController::class, 'invoice'])->name('customer_invoice_admin');
+    Route::post('/order/invoice/print', [AdminOrderController::class, 'print'])->name('print_pdf_admin');
+    Route::get('/order/invoice/delete/{id}', [AdminOrderController::class, 'delete'])->name('admin_invoice_delete')->middleware('admin:admin');
+
+    Route::get('/order/room/view', [AdminOrderController::class, 'roomOrder'])->name('admin_roomOrder')->middleware('admin:admin');
+    Route::get('/order/room-online/view', [AdminOrderController::class, 'admin_roomOrderOnline'])->name('admin_roomOrderOnline')->middleware('admin:admin');
+    Route::get('/order/room-offline/view', [AdminOrderController::class, 'admin_roomOrderOffline'])->name('admin_roomOrderOffline')->middleware('admin:admin');
 });
 
 // front
@@ -145,4 +159,8 @@ Route::group(['middleware' => ['customer:customer']], function () {
     Route::get('/home', [CustomerHomeController::class, 'index'])->name('customer_home');
     Route::get('/edit-profile', [CustomerEditProfileController::class, 'index'])->name('customer_edit_profile');
     Route::post('/edit-profile-submit', [CustomerEditProfileController::class, 'profile_submit'])->name('customer_profile_submit');
+    Route::get('/order/view', [CustomerOrderController::class, 'index'])->name('customer_order_view');
+    Route::get('/order/detail', [CustomerOrderController::class, 'detail'])->name('customer_order_detail');
+    Route::get('/order/invoice/{id}', [CustomerOrderController::class, 'invoice'])->name('customer_invoice');
+    Route::post('/order/invoice/print', [CustomerOrderController::class, 'print'])->name('print_pdf');
 });
